@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Productos</title>
+</head>
+<body>
+    <h1>Lista de Productos</h1>
+    <div id="productos"></div>
+
+    <!-- //Manipulacion DOM -->
+    <script>
+        const ObtenerProductos = async () => {
+            try {
+                const r = await fetch("https://dummyjson.com/products");
+                const data = await r.json();
+                const productos = data.products;
+
+                const contenedor = document.getElementById("productos");
+
+                productos.forEach(producto => {
+                    const div = document.createElement("div");
+                    div.innerHTML = `
+                        <h2>${producto.title}</h2>
+                        <p>${producto.description}</p>
+                        <img src="${producto.thumbnail}" width="150" />
+                        <p><strong>Precio:</strong> $${producto.price}</p>
+                        <hr>
+                    `;
+                    contenedor.appendChild(div);
+                });
+
+            } catch (error) {
+                console.log("Error al obtener productos:", error);
+            }
+        }
+
+        ObtenerProductos();
+    </script>
+</body>
+</html>
